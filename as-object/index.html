@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app" style="display: flex; flex-direction: column; width: 250px;">
+        <button @click="counter++"> Increment </button>
+        Counter value: {{ counter }}
+
+        <object :data="`sibling.html?counter=${counter}`"></object>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: { counter: 0 }
+        })
+    </script>
+    
+</body>
+</html>

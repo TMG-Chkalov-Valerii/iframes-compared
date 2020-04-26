@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #app {
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+        }
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <button @click="onClick()"> Increment </button>
+        Counter value: {{ counter }}
+    </div>
+
+    <iframe name="sibling" src="sibling.html" frameborder="0"></iframe>
+
+    <script>
+        const frame = window.frames['sibling'];
+
+        new Vue({
+            el: '#app',
+            data: { counter: 0 },
+            methods: {
+                onClick() {
+                    this.counter++;
+                    console.log(`[Parent] Changin counter value: ${this.counter}`);
+                    const data = {
+                        type: 'COUNTER_CHANGE',
+                        payload: { counter: this.counter }
+                    };
+                    console.log(`[Parent] Posting message: ${JSON.stringify(data)}`);
+
+                    frame.postMessage(data, '*');
+                    console.log('[Parent] Message send');
+                }
+            },
+        })
+    </script>
+    
+</body>
+</html>
